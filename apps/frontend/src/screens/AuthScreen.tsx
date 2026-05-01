@@ -53,6 +53,7 @@ export default function AuthScreen() {
           editable={!loading}
           autoCapitalize="none"
           keyboardType="email-address"
+          accessibilityLabel="Email address"
           className="bg-gray-700 text-white px-4 py-3 rounded-xl mb-3 border border-gray-600"
         />
 
@@ -63,6 +64,7 @@ export default function AuthScreen() {
           onChangeText={setPassword}
           editable={!loading}
           secureTextEntry
+          accessibilityLabel="Password"
           className="bg-gray-700 text-white px-4 py-3 rounded-xl mb-4 border border-gray-600"
         />
 
