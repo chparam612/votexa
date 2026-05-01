@@ -4,14 +4,34 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore } from 'firebase/firestore';
 import { getFunctions } from 'firebase/functions';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB5HT_NPp0x_JQ5HwAEEc0Lz9cAXNoZF28",
-  authDomain: "votexa-ac15c.firebaseapp.com",
-  projectId: "votexa-ac15c",
-  storageBucket: "votexa-ac15c.firebasestorage.app",
-  messagingSenderId: "419650757228",
-  appId: "1:419650757228:web:39b3d29c418fe680482e49"
-};
+const {
+  EXPO_PUBLIC_FIREBASE_API_KEY: apiKey,
+  EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN: authDomain,
+  EXPO_PUBLIC_FIREBASE_PROJECT_ID: projectId,
+  EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET: storageBucket,
+  EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: messagingSenderId,
+  EXPO_PUBLIC_FIREBASE_APP_ID: appId,
+} = process.env;
+
+const missingVars = [
+  ['EXPO_PUBLIC_FIREBASE_API_KEY', apiKey],
+  ['EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN', authDomain],
+  ['EXPO_PUBLIC_FIREBASE_PROJECT_ID', projectId],
+  ['EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET', storageBucket],
+  ['EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID', messagingSenderId],
+  ['EXPO_PUBLIC_FIREBASE_APP_ID', appId],
+]
+  .filter(([, value]) => !value)
+  .map(([name]) => name);
+
+if (missingVars.length > 0) {
+  throw new Error(
+    `Missing required Firebase environment variables: ${missingVars.join(', ')}. ` +
+      'Copy apps/frontend/.env.local.example to apps/frontend/.env.local and fill in your credentials.',
+  );
+}
+
+const firebaseConfig = { apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId };
 
 const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {

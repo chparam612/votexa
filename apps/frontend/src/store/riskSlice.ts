@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { RiskLevel } from '@votexa/algorithms';
+import { httpsCallable } from 'firebase/functions';
 import { functions } from '../firebase';
 
 interface RiskState {
@@ -22,7 +23,7 @@ export const fetchRiskReport = createAsyncThunk(
   'risk/fetchReport',
   async (voteId: string, { rejectWithValue }) => {
     try {
-      const getRiskReport = functions.httpsCallable('getRiskReport');
+      const getRiskReport = httpsCallable(functions, 'getRiskReport');
       const result = await getRiskReport({ voteId });
       return result.data;
     } catch (err: any) {
