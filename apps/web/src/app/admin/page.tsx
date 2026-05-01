@@ -23,6 +23,16 @@ export default function AdminDashboard() {
       setStats(data);
     };
 
+    // Named 'error' events sent by the server (e.g. missing credentials)
+    eventSource.addEventListener('error', (event: MessageEvent) => {
+      try {
+        const { message } = JSON.parse(event.data);
+        console.error('SSE server error:', message);
+      } catch {
+        // not a JSON error event — ignore
+      }
+    });
+
     eventSource.onerror = (err) => {
       console.error('SSE connection error:', err);
       setStatus('error');
@@ -110,8 +120,17 @@ export default function AdminDashboard() {
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-96">
-          <div className="w-10 h-10 border-4 border-emerald-900 border-t-emerald-500 rounded-full animate-spin mb-4" />
-          <TextLabel label="Initializing Neural Link..." />
+          {status === 'error' ? (
+            <>
+              <div className="w-10 h-10 border-4 border-red-900 border-t-red-500 rounded-full mb-4" />
+              <TextLabel label="Stream error — check server credentials" />
+            </>
+          ) : (
+            <>
+              <div className="w-10 h-10 border-4 border-emerald-900 border-t-emerald-500 rounded-full animate-spin mb-4" />
+              <TextLabel label="Initializing Neural Link..." />
+            </>
+          )}
         </div>
       )}
     </div>
