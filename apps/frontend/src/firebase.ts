@@ -5,12 +5,12 @@ import { getFirestore } from 'firebase/firestore';
 import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB5HT_NPp0x_JQ5HwAEEc0Lz9cAXNoZF28",
-  authDomain: "votexa-ac15c.firebaseapp.com",
-  projectId: "votexa-ac15c",
-  storageBucket: "votexa-ac15c.firebasestorage.app",
-  messagingSenderId: "419650757228",
-  appId: "1:419650757228:web:39b3d29c418fe680482e49"
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
