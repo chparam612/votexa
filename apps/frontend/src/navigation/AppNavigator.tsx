@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector, useDispatch } from 'react-redux';
+import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '../firebase';
 import { setAuthenticated, setUnauthenticated } from '../store/authSlice';
@@ -32,7 +33,7 @@ export default function AppNavigator() {
   const { isAuthenticated, loading } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setAuthenticated(user.uid));
       } else {
