@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /votes/{voteId} {
+      // Anyone can submit a vote (for demo purposes)
+      // but they cannot set their own risk score or level.
+      allow create: if !request.resource.data.keys().hasAny(['riskScore', 'riskLevel', 'flags']);
+      allow read: if true;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

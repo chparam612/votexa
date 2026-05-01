@@ -1,0 +1,26 @@
+{
+  "name": "votexa-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "postinstall": "npm run build:packages",
+    "build:backend": "npm run build -w apps/backend",
+    "build:packages": "npm run build -w packages/algorithms",
+    "build:android": "cd apps/frontend && npx eas-cli build --profile preview --platform android",
+    "build:ios": "cd apps/frontend && npx eas-cli build --profile preview --platform ios",
+    "start:frontend": "npm start -w apps/frontend",
+    "start:backend": "npm run serve -w apps/backend",
+    "lint": "eslint .",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\""
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "react-native-worklets": "^0.8.1",
+    "typescript": "^5.4.5"
+  }
+}
